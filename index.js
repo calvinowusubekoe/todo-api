@@ -1,20 +1,22 @@
 import express from "express";
+import todoRouter from "./routes/todo.js";
+import userRouter from './routes/user.js';
+import mongoose  from "mongoose";
+
+// Connect to DataBase
+await mongoose.connect(process.env.MONGO_URI);
 
 // Create an express app
 const app = express();
 
-// Define route
-app.get('/hello', (req, res, next) => {
-    console.log(req.headers);
-    res.json('You visited the hello endpoint!');
-});
+// Use middlewares
+app.use(express.json());
 
-app.get('/goodbye', function(req, res, next) {
-    console.log(req.query);
-    res.json('Same to you');
-});
+// Use routes
+app.use(todoRouter);
+app.use(userRouter);
 
 // Listen for incoming requests
-app.listen(3000, function () {
+app.listen(3000, () => {
   console.log("App is listening on port 3000");
 });
