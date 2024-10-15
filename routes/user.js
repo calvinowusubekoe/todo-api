@@ -1,30 +1,20 @@
-// import { Router } from "express";
-// import { register, login, logout } from "../controllers/user.js";
-
-// const userRouter = Router();
-
-// userRouter.post('/users/register', register);
-
-// userRouter.post('/users/login', login);
-
-// userRouter.post('/users/logout', logout);
-
-// export default userRouter;
-
-
 import { Router } from "express";
-import { register, login, logout } from "../controllers/user.js";
+import { registerUser, loginUser, logoutUser, updateProfile } from "../controllers/user.js";
+import { userAvatarUpload } from "../middlewares/upload.js";
 
 //create router
 const userRouter = Router();
 
 
 //define routes
-userRouter.post('/users/register', register);
+userRouter.post('/users/registerUser', registerUser);
 
-userRouter.post('/users/login', login);
+userRouter.post('/users/loginUser', loginUser);
 
-userRouter.post('/users/logout', logout);
+userRouter.post('/users/logoutUsesr', logoutUser);
+
+userRouter.post('/users/me', userAvatarUpload.single('avatar'), updateProfile);
+
 
 //export router
 export default userRouter
